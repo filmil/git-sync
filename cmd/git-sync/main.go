@@ -29,7 +29,7 @@ import (
 	"net/http"
 	"net/http/pprof"
 	"os"
-	"os/exec"
+	osexec "os/exec"
 	"os/signal"
 	"path"
 	"path/filepath"
@@ -40,6 +40,7 @@ import (
 	"github.com/go-logr/glogr"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"k8s.io/git-sync/pkg/exec"
 	"k8s.io/git-sync/pkg/version"
 )
 
@@ -207,7 +208,7 @@ func main() {
 		flag.Usage()
 		os.Exit(1)
 	}
-	if _, err := exec.LookPath(*flGitCmd); err != nil {
+	if _, err := osexec.LookPath(*flGitCmd); err != nil {
 		fmt.Fprintf(os.Stderr, "ERROR: git executable %q not found: %v\n", *flGitCmd, err)
 		os.Exit(1)
 	}
